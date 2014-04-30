@@ -79,9 +79,6 @@ extern char arm_arch_name[];
 	if (TARGET_VFP)					\
 	  builtin_define ("__VFP_FP__");		\
 							\
-	if (TARGET_FMA)         \
-		builtin_define ("__ARM_FEATURE_FMA");   \
-							\
 	if (TARGET_NEON)				\
 	  builtin_define ("__ARM_NEON__");		\
 							\
@@ -247,9 +244,6 @@ extern void (*arm_lang_output_object_attributes_hook)(void);
 /* FPU supports VFP half-precision floating-point.  */
 #define TARGET_FP16 (TARGET_VFP && arm_fpu_desc->fp16)
 
-/* FPU supports fused-multiply-add operations.  */
-#define TARGET_FMA (TARGET_VFP && arm_fpu_desc->rev >= 4)
-
 /* FPU supports Neon instructions.  The setting of this macro gets
    revealed via __ARM_NEON__ so we add extra guards upon TARGET_32BIT
    and TARGET_HARD_FLOAT to ensure that NEON instructions are
@@ -295,9 +289,6 @@ extern void (*arm_lang_output_object_attributes_hook)(void);
 /* Nonzero if integer division instructions supported.  */
 #define TARGET_IDIV		((TARGET_ARM && arm_arch_arm_hwdiv) \
 				 || (TARGET_THUMB2 && arm_arch_thumb_hwdiv))
-
-/* Should NEON be used for 64-bits bitops.  */
-#define TARGET_PREFER_NEON_64BITS (prefer_neon_for_64bits)
 
 /* True iff the full BPABI is being used.  If TARGET_BPABI is true,
    then TARGET_AAPCS_BASED must be true -- but the converse does not
@@ -449,10 +440,6 @@ extern int arm_arch_arm_hwdiv;
 
 /* Nonzero if chip supports integer division instruction in Thumb mode.  */
 extern int arm_arch_thumb_hwdiv;
-
-/* Nonzero if we should use Neon to handle 64-bits operations rather
-   than core registers.  */
-extern int prefer_neon_for_64bits;
 
 #ifndef TARGET_DEFAULT
 #define TARGET_DEFAULT  (MASK_APCS_FRAME)
@@ -1645,30 +1632,6 @@ typedef struct
 #define HAVE_POST_MODIFY_DISP TARGET_32BIT
 #define HAVE_PRE_MODIFY_REG   TARGET_32BIT
 #define HAVE_POST_MODIFY_REG  TARGET_32BIT
-
-enum arm_auto_incmodes
-  {
-    ARM_POST_INC,
-    ARM_PRE_INC,
-    ARM_POST_DEC,
-    ARM_PRE_DEC
-  };
-
-#define ARM_AUTOINC_VALID_FOR_MODE_P(mode, code) \
-  (TARGET_32BIT && arm_autoinc_modes_ok_p (mode, code))
-#define USE_LOAD_POST_INCREMENT(mode) \
-  ARM_AUTOINC_VALID_FOR_MODE_P(mode, ARM_POST_INC)
-#define USE_LOAD_PRE_INCREMENT(mode)  \
-  ARM_AUTOINC_VALID_FOR_MODE_P(mode, ARM_PRE_INC)
-#define USE_LOAD_POST_DECREMENT(mode) \
-  ARM_AUTOINC_VALID_FOR_MODE_P(mode, ARM_POST_DEC)
-#define USE_LOAD_PRE_DECREMENT(mode)  \
-  ARM_AUTOINC_VALID_FOR_MODE_P(mode, ARM_PRE_DEC)
-
-#define USE_STORE_PRE_DECREMENT(mode) USE_LOAD_PRE_DECREMENT(mode)
-#define USE_STORE_PRE_INCREMENT(mode) USE_LOAD_PRE_INCREMENT(mode)
-#define USE_STORE_POST_DECREMENT(mode) USE_LOAD_POST_DECREMENT(mode)
-#define USE_STORE_POST_INCREMENT(mode) USE_LOAD_POST_INCREMENT(mode)
 
 /* Macros to check register numbers against specific register classes.  */
 

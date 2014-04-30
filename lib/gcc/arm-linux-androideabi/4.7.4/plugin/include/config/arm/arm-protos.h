@@ -49,7 +49,6 @@ extern int arm_hard_regno_mode_ok (unsigned int, enum machine_mode);
 extern bool arm_modes_tieable_p (enum machine_mode, enum machine_mode);
 extern int const_ok_for_arm (HOST_WIDE_INT);
 extern int const_ok_for_op (HOST_WIDE_INT, enum rtx_code);
-extern int const_ok_for_dimode_op (HOST_WIDE_INT, enum rtx_code);
 extern int arm_split_constant (RTX_CODE, enum machine_mode, rtx,
 			       HOST_WIDE_INT, rtx, rtx, int);
 extern RTX_CODE arm_canonicalize_comparison (RTX_CODE, rtx *, rtx *);
@@ -102,14 +101,12 @@ extern int arm_early_load_addr_dep (rtx, rtx);
 extern int arm_no_early_alu_shift_dep (rtx, rtx);
 extern int arm_no_early_alu_shift_value_dep (rtx, rtx);
 extern int arm_no_early_mul_dep (rtx, rtx);
-extern int arm_mac_accumulator_is_result (rtx, rtx);
 extern int arm_mac_accumulator_is_mul_result (rtx, rtx);
 
 extern int tls_mentioned_p (rtx);
 extern int symbol_mentioned_p (rtx);
 extern int label_mentioned_p (rtx);
 extern RTX_CODE minmax_code (rtx);
-extern bool arm_sat_operator_match (rtx, rtx, int *, bool *);
 extern int adjacent_mem_locations (rtx, rtx);
 extern bool gen_ldm_seq (rtx *, int, bool);
 extern bool gen_stm_seq (rtx *, int);
@@ -225,27 +222,6 @@ extern const char *arm_mangle_type (const_tree);
 
 extern void arm_order_regs_for_local_alloc (void);
 
-/* Vectorizer cost model implementation.  */
-struct cpu_vec_costs {
-  const int scalar_stmt_cost;   /* Cost of any scalar operation, excluding
-				   load and store.  */
-  const int scalar_load_cost;   /* Cost of scalar load.  */
-  const int scalar_store_cost;  /* Cost of scalar store.  */
-  const int vec_stmt_cost;      /* Cost of any vector operation, excluding
-                                   load, store, vector-to-scalar and
-                                   scalar-to-vector operation.  */
-  const int vec_to_scalar_cost;    /* Cost of vect-to-scalar operation.  */
-  const int scalar_to_vec_cost;    /* Cost of scalar-to-vector operation.  */
-  const int vec_align_load_cost;   /* Cost of aligned vector load.  */
-  const int vec_unalign_load_cost; /* Cost of unaligned vector load.  */
-  const int vec_unalign_store_cost; /* Cost of unaligned vector load.  */
-  const int vec_store_cost;        /* Cost of vector store.  */
-  const int cond_taken_branch_cost;    /* Cost of taken branch for vectorizer
-					  cost model.  */
-  const int cond_not_taken_branch_cost;/* Cost of not taken branch for
-					  vectorizer cost model.  */
-};
-
 #ifdef RTX_CODE
 /* This needs to be here because we need RTX_CODE and similar.  */
 
@@ -262,22 +238,13 @@ struct tune_params
   int l1_cache_line_size;
   bool prefer_constant_pool;
   int (*branch_cost) (bool, bool);
-  /* Prefer Neon for 64-bit bitops.  */
-  bool prefer_neon_for_64bits;
-  /* Vectorizer costs.  */
-  const struct cpu_vec_costs* vec_costs;
 };
 
 extern const struct tune_params *current_tune;
 extern int vfp3_const_double_for_fract_bits (rtx);
-
-extern void arm_emit_coreregs_64bit_shift (enum rtx_code, rtx, rtx, rtx, rtx,
-					   rtx);
 #endif /* RTX_CODE */
 
 extern void arm_expand_vec_perm (rtx target, rtx op0, rtx op1, rtx sel);
 extern bool arm_expand_vec_perm_const (rtx target, rtx op0, rtx op1, rtx sel);
-
-extern bool arm_autoinc_modes_ok_p (enum machine_mode, enum arm_auto_incmodes);
 
 #endif /* ! GCC_ARM_PROTOS_H */

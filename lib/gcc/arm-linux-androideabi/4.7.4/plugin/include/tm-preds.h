@@ -1,5 +1,5 @@
 /* Generated automatically by the program 'build/genpreds'
-   from the machine description file '../.././../gcc/gcc-uber/gcc/config/arm/arm.md'.  */
+   from the machine description file '../.././../gcc/gcc-4.7.4/gcc/config/arm/arm.md'.  */
 
 #ifndef GCC_TM_PREDS_H
 #define GCC_TM_PREDS_H
@@ -28,8 +28,6 @@ extern int low_reg_or_int_operand (rtx, enum machine_mode);
 extern int arm_general_register_operand (rtx, enum machine_mode);
 extern int f_register_operand (rtx, enum machine_mode);
 extern int vfp_register_operand (rtx, enum machine_mode);
-extern int zero_operand (rtx, enum machine_mode);
-extern int reg_or_zero_operand (rtx, enum machine_mode);
 extern int subreg_lowpart_operator (rtx, enum machine_mode);
 extern int reg_or_int_operand (rtx, enum machine_mode);
 extern int arm_immediate_operand (rtx, enum machine_mode);
@@ -42,7 +40,6 @@ extern int arm_rhsm_operand (rtx, enum machine_mode);
 extern int shift_amount_operand (rtx, enum machine_mode);
 extern int const_neon_scalar_shift_amount_operand (rtx, enum machine_mode);
 extern int arm_add_operand (rtx, enum machine_mode);
-extern int arm_adddi_operand (rtx, enum machine_mode);
 extern int arm_addimm_operand (rtx, enum machine_mode);
 extern int arm_not_operand (rtx, enum machine_mode);
 extern int arm_di_operand (rtx, enum machine_mode);
@@ -96,6 +93,7 @@ extern int imm_for_neon_logic_operand (rtx, enum machine_mode);
 extern int imm_for_neon_inv_logic_operand (rtx, enum machine_mode);
 extern int neon_logic_op2 (rtx, enum machine_mode);
 extern int neon_inv_logic_op2 (rtx, enum machine_mode);
+extern int neon_lane_number (rtx, enum machine_mode);
 extern int cmpdi_operand (rtx, enum machine_mode);
 extern int arm_sync_memory_operand (rtx, enum machine_mode);
 extern int vect_par_constant_high (rtx, enum machine_mode);
@@ -150,7 +148,6 @@ enum constraint_num
   CONSTRAINT_Da,
   CONSTRAINT_Db,
   CONSTRAINT_Dc,
-  CONSTRAINT_Dd,
   CONSTRAINT_Di,
   CONSTRAINT_Dn,
   CONSTRAINT_Dl,
