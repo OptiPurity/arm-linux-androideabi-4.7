@@ -53,7 +53,7 @@ if [ x$1 != x ] ; then
   prefix=$1
   shift
 else
-  prefix=/home/cl3kener/tmp/arm-linux-androideabi-4.7
+  prefix=/home/cl3kener/uber_toolchain/arm-linux-androideabi-4.7
 fi
 
 # Allow for alternate isysroot in which to find headers

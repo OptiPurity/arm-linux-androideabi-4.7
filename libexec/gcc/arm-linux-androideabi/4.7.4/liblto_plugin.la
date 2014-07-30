@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/cl3kener/tmp/arm-linux-androideabi-4.7/libexec/gcc/arm-linux-androideabi/4.7.4'
+libdir='/home/cl3kener/uber_toolchain/arm-linux-androideabi-4.7/libexec/gcc/arm-linux-androideabi/4.7.4'
